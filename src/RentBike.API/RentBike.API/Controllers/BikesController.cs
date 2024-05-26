@@ -22,7 +22,7 @@ namespace RentBike.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromHeader] string user, CancellationToken cancellationToken) 
+        public async Task<IActionResult> GetAll([FromHeader] string user, CancellationToken cancellationToken)
         {
             var command = new GetAllBikesQuery { AdminUserId = user };
             return Ok(await _mediator.Send(command, cancellationToken));
@@ -32,29 +32,39 @@ namespace RentBike.API.Controllers
         public async Task<IActionResult> GetbyPlate([FromHeader] string? user, [FromRoute] string plate, CancellationToken cancellationToken)
         {
             var command = new GetBikeByPlateQuery { Plate = plate, AdminUserId = user };
-            if (!ModelState.IsValid) 
+            if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            if(string.IsNullOrWhiteSpace(user))
+            if (string.IsNullOrWhiteSpace(user))
                 return Unauthorized();
             return Ok(await _mediator.Send(command, cancellationToken));
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromHeader] string? user, [FromBody]CreateBikeCommand command, CancellationToken cancellationToken)
+        public async Task<IActionResult> Post([FromHeader] string? user, [FromBody] CreateBikeCommand command, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            if(string.IsNullOrWhiteSpace(user)) return Unauthorized();
+            if (string.IsNullOrWhiteSpace(user)) return Unauthorized();
             command.AdminUserId = user;
             await _mediator.Send(command, cancellationToken);
             return Ok();
         }
 
         [HttpPatch]
-        public async Task<IActionResult> UpdatePlate([FromHeader] string? user, [FromBody] UpdateBikePlateCommand command, CancellationToken cancellationToken) 
+        public async Task<IActionResult> UpdatePlate([FromHeader] string? user, [FromBody] UpdateBikePlateCommand command, CancellationToken cancellationToken)
         {
-            if(!ModelState.IsValid) return BadRequest(ModelState);
-            if(string.IsNullOrWhiteSpace(user)) return Unauthorized();
-            command.AdminUserId= user;
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (string.IsNullOrWhiteSpace(user)) return Unauthorized();
+            command.AdminUserId = user;
+            await _mediator.Send(command, cancellationToken);
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromHeader] string user, [FromRoute] string id, CancellationToken cancellationToken) 
+        {
+            var command = new DeleteBikeCommand { Id = Guid.Parse(id), AdminUserId = user };
+            //if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (string.IsNullOrWhiteSpace(user)) return Unauthorized();
             await _mediator.Send(command, cancellationToken);
             return NoContent();
         }
