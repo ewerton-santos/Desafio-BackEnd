@@ -26,31 +26,26 @@ namespace RentBike.API.Controllers
             _mediator = mediator;
             _adminUserRepository = adminUserRepository;
         }
-
-        // GET: api/<AdminUsersController>                
+                     
         [HttpGet]
         public async Task<IActionResult> Get()
         {
             return Ok(await _adminUserRepository.GetAll());
         }
 
-        // GET api/<AdminUsersController>/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id, CancellationToken cancellationToken)
-        {
-            //return Ok(await _adminUserRepository.GetById(id));
+        {            
             return Ok(await _mediator.Send(new GetAdminUserQuery { Id = id }, cancellationToken));
         }
-
-        // POST api/<AdminUsersController>
+        
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AdminUserInsertModel model)
         {
             await _adminUserRepository.Add(new AdminUser { Name = model.Name });
             return Created();
         }
-
-        // PUT api/<AdminUsersController>/5
+        
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(Guid id, [FromBody] AdminUserInsertModel model)
         {
@@ -61,8 +56,7 @@ namespace RentBike.API.Controllers
             await _adminUserRepository.Update(entity);
             return NoContent();
         }
-
-        // DELETE api/<AdminUsersController>/5
+        
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {

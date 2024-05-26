@@ -15,8 +15,8 @@ namespace RentBike.Infrastructure.Mapping
                 .HasColumnType("varchar(100)");
             builder.Property(p => p.BirthDate)
                 .IsRequired()
-                .HasColumnName("birthdate");
-                //.HasColumnType("timestamp");
+                .HasColumnName("birthdate")
+                .HasColumnType("date");
             builder.Property(p => p.Cnpj)
                 .IsRequired()
                 .HasColumnName("cnpj")

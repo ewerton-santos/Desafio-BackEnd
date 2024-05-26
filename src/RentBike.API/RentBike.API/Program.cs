@@ -12,8 +12,6 @@ var builder = WebApplication.CreateBuilder(args);
 IConfigurationRoot config = new ConfigurationBuilder()
           .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
           .Build();
-//IConfiguration _config = builder.Configuration;
-//builder.Services.Configure<Config>(_config.GetSection("AppParameters"));
 // Add services to the container.
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -29,6 +27,7 @@ builder.Services.AddScoped<IAdminUserRepository, AdminUserRepository>();
 builder.Services.AddScoped<IDeliverymanUserRepository, DeliverymanUserRepository>();
 builder.Services.AddScoped<IBikeRepository, BikeRepository>();
 builder.Services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
+
 
 var app = builder.Build();
 
