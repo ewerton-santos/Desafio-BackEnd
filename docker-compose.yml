@@ -3,23 +3,7 @@ services:
     image: rabbitmq:management
     ports:
       - "5672:5672" # Porta padrão para conexões AMQP
-      - "15672:15672" # Porta padrão para o painel de controle do RabbitMQ
-  mssql:
-    container_name: mssql-db
-    hostname: mssql-db
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    environment:
-      ACCEPT_EULA: 'Y'
-      MSSQL_SA_PASSWORD: 'Rent@bike2024'
-      MSSQL_DATA_DIR: /var/opt/mssql/data
-      MSSQL_PID: 'Developer' 
-      MSSQL_TCP_PORT: 1433
-    ports: 
-      - "1433:1433"
-    volumes:
-      - ./data:/var/opt/mssql/data
-      - ./log:/var/opt/mssql/log
-      - ./secrets:/var/opt/mssql/secrets
+      - "15672:15672" # Porta padrão para o painel de controle do RabbitMQ  
   postgres:
     image: postgres:14-alpine
     ports:
