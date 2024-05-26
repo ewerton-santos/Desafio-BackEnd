@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RentBike.Application.Commands;
 using RentBike.Application.Queries;
+using RentBike.Domain.Repositories;
 
 namespace RentBike.API.Controllers
 {
@@ -10,12 +11,21 @@ namespace RentBike.API.Controllers
     public class BikesController : ControllerBase
     {
         private readonly ILogger<BikesController> _logger;
+        private readonly IBikeRepository _bikeRepository;
         private readonly IMediator _mediator;
 
-        public BikesController(ILogger<BikesController> logger, IMediator mediator)
+        public BikesController(ILogger<BikesController> logger, IMediator mediator, IBikeRepository bikeRepository)
         {
             _logger = logger;
             _mediator = mediator;
+            _bikeRepository = bikeRepository;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll([FromHeader] string user, CancellationToken cancellationToken) 
+        {
+            var command = new GetAllBikesQuery { AdminUserId = user };
+            return Ok(await _mediator.Send(command, cancellationToken));
         }
 
         [HttpGet("{plate}")]
