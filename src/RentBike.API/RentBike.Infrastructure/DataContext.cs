@@ -22,7 +22,7 @@ namespace RentBike.Infrastructure
 
         public DbSet<AdminUser> AdminUsers { get; set; }
         public DbSet<DeliverymanUser> DeliverymanUsers { get; set; }
-        public DbSet<DriversLicence> DriversLicences { get; set; }
+        public DbSet<DriversLicense> DriversLicences { get; set; }
         public DbSet<Bike> Bikes { get; set; }
     }
 }

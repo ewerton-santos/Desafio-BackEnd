@@ -24,4 +24,8 @@
     <ProjectReference Include="..\RentBile.Domain\RentBike.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Middlewares\" />
+  </ItemGroup>
+
 </Project>

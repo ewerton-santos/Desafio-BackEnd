@@ -4,8 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace RentBikeUsers.Domain.Enums
 {
-    [JsonConverter(typeof(StringEnumConverter<DriversLicenceType>))]
-    public enum DriversLicenceType
+    [JsonConverter(typeof(StringEnumConverter<DriversLicenseType>))]
+    public enum DriversLicenseType
     {
         [EnumMember(Value = "A")]
         A = 1,

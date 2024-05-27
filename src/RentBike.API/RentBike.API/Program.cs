@@ -14,7 +14,6 @@ IConfigurationRoot config = new ConfigurationBuilder()
           .Build();
 // Add services to the container.
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddSingleton<IConfig, Config>();
 builder.Services.AddSingleton<IRabbitMQListenerService, RabbitMQListenerService>();
 builder.Services.AddHostedService<RabbitMQListenerHostedService>();
@@ -27,8 +26,7 @@ builder.Services.AddScoped<IAdminUserRepository, AdminUserRepository>();
 builder.Services.AddScoped<IDeliverymanUserRepository, DeliverymanUserRepository>();
 builder.Services.AddScoped<IBikeRepository, BikeRepository>();
 builder.Services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
-
-
+builder.Services.AddHealthChecks();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -36,7 +34,12 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    using var serviceScope = app.Services.GetService<IServiceScopeFactory>()!.CreateScope();
+    var context = serviceScope.ServiceProvider.GetRequiredService<DataContext>();
+    context.Database.EnsureCreated();
 }
+
+app.UseHealthChecks("/health");
 
 app.UseMiddleware<ErrorHandlerMiddleware>();
 

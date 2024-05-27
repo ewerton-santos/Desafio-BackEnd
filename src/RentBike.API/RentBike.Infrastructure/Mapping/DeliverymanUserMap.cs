@@ -22,6 +22,13 @@ namespace RentBike.Infrastructure.Mapping
                 .HasColumnName("cnpj")
                 .HasColumnType("varchar(14)");
             builder.HasIndex(p => p.Cnpj).IsUnique();
+            builder.HasOne(p => p.DriversLicense)
+                .WithOne(p => p.DeliverymanUser)
+                .HasForeignKey<DriversLicense>(d => d.DeliverymanId);
+            builder.HasOne(p => p.DriversLicense)
+                .WithOne(q => q.DeliverymanUser)
+                .OnDelete(DeleteBehavior.Cascade);
+
         }
     }
 }

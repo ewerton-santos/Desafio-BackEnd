@@ -15,6 +15,6 @@ namespace RentBike.Application.Commands
         [Required(ErrorMessage = "Driver's license number is required")]
         public string DriversLicenseNumber { get; set; }
         [Required(ErrorMessage = "Driver's license type is required")]        
-        public DriversLicenceType DriversLicenseType { get; set; }        
+        public DriversLicenseType DriversLicenseType { get; set; }        
     }
 }

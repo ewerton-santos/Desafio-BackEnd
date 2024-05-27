@@ -26,10 +26,10 @@ namespace RentBike.Application.Handlers.Commands
                 Name = request.Name,
                 Cnpj = request.Cnpj,
                 BirthDate = request.Birthdate,
-                DriversLicence = new DriversLicence
+                DriversLicense = new DriversLicense
                 {
                     Number = request.DriversLicenseNumber,
-                    DriversLicenceType = DriversLicenceType.A
+                    DriversLicenseType = DriversLicenseType.A
                 }
             };
             await _deliverymanUserRepository.Add(deliveryman);

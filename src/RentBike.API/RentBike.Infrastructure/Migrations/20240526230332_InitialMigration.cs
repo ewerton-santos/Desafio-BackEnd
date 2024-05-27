@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace RentBike.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigrations : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -26,12 +26,28 @@ namespace RentBike.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "bikes",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    plate = table.Column<string>(type: "varchar(7)", maxLength: 7, nullable: false),
+                    model = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    year = table.Column<int>(type: "int", nullable: false),
+                    Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    LastUpdated = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_bikes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "deliveryman_users",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "varchar(100)", nullable: false),
-                    birthdate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    birthdate = table.Column<DateTime>(type: "date", nullable: false),
                     cnpj = table.Column<string>(type: "varchar(14)", nullable: false),
                     Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     LastUpdated = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
@@ -48,7 +64,7 @@ namespace RentBike.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     number = table.Column<string>(type: "varchar(10)", nullable: false),
                     image = table.Column<string>(type: "varchar(200)", nullable: true),
-                    DriversLicenceType = table.Column<int>(type: "integer", nullable: false),
+                    DriversLicenseType = table.Column<int>(type: "integer", nullable: false),
                     DeliverymanId = table.Column<Guid>(type: "uuid", nullable: false),
                     Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     LastUpdated = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
@@ -63,6 +79,12 @@ namespace RentBike.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_bikes_plate",
+                table: "bikes",
+                column: "plate",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_deliveryman_users_cnpj",
@@ -88,6 +110,9 @@ namespace RentBike.Infrastructure.Migrations
         {
             migrationBuilder.DropTable(
                 name: "admin_users");
+
+            migrationBuilder.DropTable(
+                name: "bikes");
 
             migrationBuilder.DropTable(
                 name: "drivers_licenses");

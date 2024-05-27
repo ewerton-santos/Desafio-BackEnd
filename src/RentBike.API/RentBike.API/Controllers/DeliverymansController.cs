@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RentBike.Application.Commands;
 using RentBike.Domain.Repositories;
@@ -23,15 +22,15 @@ namespace RentBike.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get() 
+        public async Task<IActionResult> Get()
         {
-            return Ok(await _deliverymanUserRepository.GetAll());
+            return Ok(await _deliverymanUserRepository.GetAll(c => c.DriversLicense));
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(CreateDeliverymanCommand command, CancellationToken cancellationToken) 
+        public async Task<IActionResult> Post(CreateDeliverymanCommand command, CancellationToken cancellationToken)
         {
-            if(!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid) return BadRequest(ModelState);
             await _mediator.Send(command, cancellationToken);
             return Ok();
         }

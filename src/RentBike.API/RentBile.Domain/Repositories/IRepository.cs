@@ -6,6 +6,7 @@ namespace RentBike.Domain.Repositories
     {
         Task<TEntity> GetById(TId id);
         Task<IEnumerable<TEntity>> GetAll();
+        Task<IEnumerable<TEntity>> GetAll(params Expression<Func<TEntity, object>>[] includeProperties);
         Task<IEnumerable<TEntity>> Find(Expression<Func<TEntity, bool>> predicate);
         Task Add(TEntity entity);
         Task Update(TEntity entity);

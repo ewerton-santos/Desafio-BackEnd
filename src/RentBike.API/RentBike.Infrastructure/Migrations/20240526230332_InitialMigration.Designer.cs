@@ -12,8 +12,8 @@ using RentBike.Infrastructure;
 namespace RentBike.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240526042533_UpdatesBike2")]
-    partial class UpdatesBike2
+    [Migration("20240526230332_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -90,7 +90,7 @@ namespace RentBike.Infrastructure.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("BirthDate")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("date")
                         .HasColumnName("birthdate");
 
                     b.Property<string>("Cnpj")
@@ -117,7 +117,7 @@ namespace RentBike.Infrastructure.Migrations
                     b.ToTable("deliveryman_users", (string)null);
                 });
 
-            modelBuilder.Entity("RentBikeUsers.Domain.Entities.DriversLicence", b =>
+            modelBuilder.Entity("RentBikeUsers.Domain.Entities.DriversLicense", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -129,7 +129,7 @@ namespace RentBike.Infrastructure.Migrations
                     b.Property<Guid>("DeliverymanId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("DriversLicenceType")
+                    b.Property<int>("DriversLicenseType")
                         .HasColumnType("integer");
 
                     b.Property<string>("Image")
@@ -155,11 +155,11 @@ namespace RentBike.Infrastructure.Migrations
                     b.ToTable("drivers_licenses", (string)null);
                 });
 
-            modelBuilder.Entity("RentBikeUsers.Domain.Entities.DriversLicence", b =>
+            modelBuilder.Entity("RentBikeUsers.Domain.Entities.DriversLicense", b =>
                 {
                     b.HasOne("RentBikeUsers.Domain.Entities.DeliverymanUser", "DeliverymanUser")
-                        .WithOne("DriversLicence")
-                        .HasForeignKey("RentBikeUsers.Domain.Entities.DriversLicence", "DeliverymanId")
+                        .WithOne("DriversLicense")
+                        .HasForeignKey("RentBikeUsers.Domain.Entities.DriversLicense", "DeliverymanId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -168,7 +168,7 @@ namespace RentBike.Infrastructure.Migrations
 
             modelBuilder.Entity("RentBikeUsers.Domain.Entities.DeliverymanUser", b =>
                 {
-                    b.Navigation("DriversLicence");
+                    b.Navigation("DriversLicense");
                 });
 #pragma warning restore 612, 618
         }

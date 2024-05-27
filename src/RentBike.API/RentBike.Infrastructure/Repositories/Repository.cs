@@ -24,6 +24,13 @@ namespace RentBike.Infrastructure.Repositories
         }
 
         public async Task<IEnumerable<TEntity>> GetAll() => await _entities.ToListAsync();
+        public async Task<IEnumerable<TEntity>> GetAll(params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            IQueryable<TEntity> query = _entities;
+            foreach (var includeProperty in includeProperties)
+                query = query.Include(includeProperty);
+            return await query.ToListAsync();
+        }        
         public async Task<IEnumerable<TEntity>> Find(Expression<Func<TEntity, bool>> predicate) => await _entities.Where(predicate).ToListAsync();
         
         public async Task Add(TEntity entity)

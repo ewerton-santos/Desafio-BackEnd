@@ -4,9 +4,9 @@ using RentBikeUsers.Domain.Entities;
 
 namespace RentBike.Infrastructure.Mapping
 {
-    public class DriversLicenseMap : IEntityTypeConfiguration<DriversLicence>
+    public class DriversLicenseMap : IEntityTypeConfiguration<DriversLicense>
     {
-        public void Configure(EntityTypeBuilder<DriversLicence> builder)
+        public void Configure(EntityTypeBuilder<DriversLicense> builder)
         {
             builder.ToTable("drivers_licenses");
             builder.Property(p => p.Number)
@@ -17,10 +17,6 @@ namespace RentBike.Infrastructure.Mapping
                 .HasColumnName("image")
                 .HasColumnType("varchar(200)");
             builder.HasIndex(p => p.Number).IsUnique();
-            builder.HasOne(p => p.DeliverymanUser)
-                .WithOne(p => p.DriversLicence)
-                .HasForeignKey<DriversLicence>(e => e.DeliverymanId)
-                .IsRequired();
         }
     }
 }
