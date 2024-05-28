@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RentBike.Infrastructure;
@@ -11,9 +12,11 @@ using RentBike.Infrastructure;
 namespace RentBike.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240528013742_CreatesRentAndRentPlanTables")]
+    partial class CreatesRentAndRentPlanTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,10 +33,6 @@ namespace RentBike.Infrastructure.Migrations
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsAvailable")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_available");
 
                     b.Property<DateTime?>("LastUpdated")
                         .HasColumnType("timestamp with time zone");
@@ -87,10 +86,6 @@ namespace RentBike.Infrastructure.Migrations
                         .HasColumnType("date")
                         .HasColumnName("expected_end_date");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_active");
-
                     b.Property<DateTime?>("LastUpdated")
                         .HasColumnType("timestamp with time zone");
 
@@ -110,7 +105,7 @@ namespace RentBike.Infrastructure.Migrations
 
                     b.HasIndex("RentPlanId");
 
-                    b.ToTable("rents", (string)null);
+                    b.ToTable("rent", (string)null);
                 });
 
             modelBuilder.Entity("RentBike.Domain.Entities.RentPlan", b =>
@@ -118,10 +113,6 @@ namespace RentBike.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
-
-                    b.Property<int>("CostPerDay")
-                        .HasColumnType("integer")
-                        .HasColumnName("cost_per_day");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("timestamp with time zone");
@@ -140,32 +131,6 @@ namespace RentBike.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("rent_plans", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("dc4ba287-eb02-4a4b-a22c-f12e78072963"),
-                            CostPerDay = 30,
-                            Created = new DateTime(2024, 5, 28, 2, 33, 26, 628, DateTimeKind.Utc).AddTicks(3076),
-                            Days = 7,
-                            FinePercentage = 20f
-                        },
-                        new
-                        {
-                            Id = new Guid("e1137606-54d5-4ba0-b6d9-17cc9f34427e"),
-                            CostPerDay = 28,
-                            Created = new DateTime(2024, 5, 28, 2, 33, 26, 628, DateTimeKind.Utc).AddTicks(3097),
-                            Days = 15,
-                            FinePercentage = 40f
-                        },
-                        new
-                        {
-                            Id = new Guid("a903d959-ab33-4b31-848c-964d381de75f"),
-                            CostPerDay = 22,
-                            Created = new DateTime(2024, 5, 28, 2, 33, 26, 628, DateTimeKind.Utc).AddTicks(3102),
-                            Days = 30,
-                            FinePercentage = 60f
-                        });
                 });
 
             modelBuilder.Entity("RentBikeUsers.Domain.Entities.AdminUser", b =>

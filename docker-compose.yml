@@ -42,19 +42,19 @@ services:
       - minio_data:/data
     networks:
       - localnet
-  api: 
-    build: ./src/RentBike.API      
-    container_name: container_ewerton
-    ports:
-      - 8080:80
-      - 8081:443
-    networks:
-      - localnet
-    depends_on:
-      postgres:
-        condition: service_healthy
-      rabbitmq:
-        condition: service_healthy
+  # api: 
+  #   build: ./src/RentBike.API      
+  #   container_name: container_ewerton
+  #   ports:
+  #     - 8080:80
+  #     - 8081:443
+  #   networks:
+  #     - localnet
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+  #     rabbitmq:
+  #       condition: service_healthy
 volumes:
   minio_data:
     driver: local

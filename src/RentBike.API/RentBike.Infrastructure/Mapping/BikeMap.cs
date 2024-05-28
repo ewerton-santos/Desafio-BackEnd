@@ -23,6 +23,10 @@ namespace RentBike.Infrastructure.Mapping
                 .HasColumnName("model")
                 .HasColumnType("varchar(50)")
                 .IsRequired();
+            builder.Property(p => p.IsAvailable)
+                .HasColumnName("is_available")
+                .HasColumnType ("boolean")
+                .HasConversion<bool>();
             builder.HasIndex(p => p.Plate).IsUnique();
         }
     }

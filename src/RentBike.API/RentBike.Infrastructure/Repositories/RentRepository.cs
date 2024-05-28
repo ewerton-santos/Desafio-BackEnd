@@ -4,9 +4,9 @@ using RentBike.Domain.Repositories;
 
 namespace RentBike.Infrastructure.Repositories
 {
-    public class RentPlanRepository : Repository<RentPlan, Guid>, IRentPlanRepository
+    public class RentRepository : Repository<Rent, Guid>, IRentRepository
     {
-        public RentPlanRepository(DbContext context) : base(context)
+        public RentRepository(DataContext context) : base(context)
         {
         }
     }

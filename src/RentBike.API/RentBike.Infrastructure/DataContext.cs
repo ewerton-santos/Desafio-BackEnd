@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RentBike.Domain.Entities;
+using RentBike.Infrastructure.Migrations;
 using RentBikeUsers.Domain.Entities;
 using System.Reflection;
 
@@ -24,5 +25,7 @@ namespace RentBike.Infrastructure
         public DbSet<DeliverymanUser> DeliverymanUsers { get; set; }
         public DbSet<DriversLicense> DriversLicences { get; set; }
         public DbSet<Bike> Bikes { get; set; }
+        public DbSet<RentPlan> RentPlans { get; set; }
+        public DbSet<Rent> Rents { get; set; }
     }
 }

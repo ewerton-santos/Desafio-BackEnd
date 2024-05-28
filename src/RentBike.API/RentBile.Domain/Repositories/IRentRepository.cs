@@ -2,7 +2,7 @@
 
 namespace RentBike.Domain.Repositories
 {
-    public interface IRentPlanRepository : IRepository<RentPlan, Guid>
+    public interface IRentRepository : IRepository<Rent, Guid>
     {
     }
 }
