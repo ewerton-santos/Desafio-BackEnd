@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using RentBike.Application.Commands;
 using RentBike.Domain.Entities;
+using RentBike.Domain.Exceptions;
 using RentBike.Domain.Repositories;
 using RentBikeUsers.Domain.Enums;
 
@@ -30,15 +31,15 @@ namespace RentBike.Application.Handlers.Commands
 
         public async Task Handle(CreateRentBikeCommand request, CancellationToken cancellationToken)
         {
-            var deliveryman = await _deliverymanUserRepository.GetById(request.DeliverymanUserId, p => p.DriversLicense) ?? throw new Exception("Deliveryman' User not found");
-            if (deliveryman.DriversLicense == null) 
-                throw new Exception("Driver's license not found");
-            if (deliveryman.DriversLicense.DriversLicenseType == DriversLicenseType.B) 
-                throw new Exception("Driver not qualified for the category");
-            var rentplan = await _rentPlanRepository.GetById(request.RentPlanId) ?? throw new Exception("Rent Plan not found");
+            var deliveryman = await _deliverymanUserRepository.GetById(request.DeliverymanUserId, p => p.DriversLicense) ?? throw new DeliverymanUserNotFoundException();
+            if (deliveryman.DriversLicense == null)
+                throw new DriversLicenseNotFoundException();
+            if (deliveryman.DriversLicense.DriversLicenseType == DriversLicenseType.B)
+                throw new DriverNotQualifiedForCategoryException();
+            var rentplan = await _rentPlanRepository.GetById(request.RentPlanId) ?? throw new RentPlanNotFoundExeception();
             var bikes = await _bikeRepository.Find(c => c.IsAvailable);
             if (bikes == null || !bikes.Any())
-                throw new Exception("There are no motorbikes available");
+                throw new BikeNotAvailableException();
             var bike = bikes.FirstOrDefault();
             await _rentRepository.Add(new Rent 
             {

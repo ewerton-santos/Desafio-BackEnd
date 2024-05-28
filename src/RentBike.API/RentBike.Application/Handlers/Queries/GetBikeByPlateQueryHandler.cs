@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using RentBike.Application.Queries;
 using RentBike.Domain.Entities;
+using RentBike.Domain.Exceptions;
 using RentBike.Domain.Repositories;
 
 namespace RentBike.Application.Handlers.Queries
@@ -24,7 +25,7 @@ namespace RentBike.Application.Handlers.Queries
         {
             var adminUser = await _adminUserRepository.GetById(Guid.Parse(request.AdminUserId));
             return adminUser == null
-                ? throw new Exception("User isn't Admin")
+                ? throw new AdminUserNotAdminException()
                 : (await _bikeRepository.Find(p => p.Plate == request.Plate)).FirstOrDefault();
         }
     }

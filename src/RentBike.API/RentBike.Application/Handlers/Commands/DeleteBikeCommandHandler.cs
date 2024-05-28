@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
 using RentBike.Application.Commands;
+using RentBike.Domain.Exceptions;
 using RentBike.Domain.Repositories;
 
 namespace RentBike.Application.Handlers.Commands
@@ -20,8 +21,8 @@ namespace RentBike.Application.Handlers.Commands
         }
         public async Task Handle(DeleteBikeCommand request, CancellationToken cancellationToken)
         {
-            var adminUser = await _adminUserRepository.GetById(Guid.Parse(request.AdminUserId)) ?? throw new Exception("User isn't Admin");
-            var bike = await _bikeRepository.GetById(request.Id) ?? throw new Exception("This bike not found");
+            var adminUser = await _adminUserRepository.GetById(Guid.Parse(request.AdminUserId)) ?? throw new AdminUserNotFoundException();
+            var bike = await _bikeRepository.GetById(request.Id) ?? throw new BikeNotFoundException();
             await _bikeRepository.Remove(bike);
         }
     }

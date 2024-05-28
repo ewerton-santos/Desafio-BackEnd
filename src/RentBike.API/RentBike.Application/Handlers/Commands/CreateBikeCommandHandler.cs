@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using RentBike.Application.Commands;
 using RentBike.Domain.Entities;
+using RentBike.Domain.Exceptions;
 using RentBike.Domain.Repositories;
 
 namespace RentBike.Application.Handlers.Commands
@@ -21,7 +22,7 @@ namespace RentBike.Application.Handlers.Commands
         {
             var adminUser = await _adminUserRepository.GetById(Guid.Parse(request.AdminUserId));
             if (adminUser == null)
-                throw new Exception("User isn`t Admin");
+                throw new AdminUserNotFoundException();
             await _bikeRepository.Add(new Bike
             {
                 Model = request.Model,
