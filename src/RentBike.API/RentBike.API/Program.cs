@@ -25,6 +25,8 @@ builder.Services.AddMediatR(c => c.RegisterServicesFromAssemblies(AppDomain.Curr
 builder.Services.AddScoped<IAdminUserRepository, AdminUserRepository>();
 builder.Services.AddScoped<IDeliverymanUserRepository, DeliverymanUserRepository>();
 builder.Services.AddScoped<IBikeRepository, BikeRepository>();
+builder.Services.AddScoped<IRentPlanRepository, RentPlanRepository>();
+builder.Services.AddScoped<IRentRepository, RentRepository>();
 builder.Services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
 builder.Services.AddHealthChecks();
 var app = builder.Build();
