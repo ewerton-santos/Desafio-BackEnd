@@ -11,7 +11,7 @@ namespace RentBike.Domain.Entities
         public DateTime StartDate { get; set; } =DateTime.UtcNow.AddDays(1);
         public DateTime? EndDate { get; set; }
         public DateTime? ExpectedEndDate { get; set; }
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = true;
         [JsonIgnore]
         public DeliverymanUser DeliverymanUser { get; set; }
         [JsonIgnore]

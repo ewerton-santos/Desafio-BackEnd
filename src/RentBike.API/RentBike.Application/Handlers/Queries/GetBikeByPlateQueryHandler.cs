@@ -6,13 +6,13 @@ using RentBike.Domain.Repositories;
 
 namespace RentBike.Application.Handlers.Queries
 {
-    public class GetBikeByPlateCommandHandler : IRequestHandler<GetBikeByPlateQuery, Bike>
+    public class GetBikeByPlateQueryHandler : IRequestHandler<GetBikeByPlateQuery, Bike>
     {
-        readonly ILogger<GetBikeByPlateCommandHandler> _logger;
+        readonly ILogger<GetBikeByPlateQueryHandler> _logger;
         readonly IBikeRepository _bikeRepository;
         readonly IAdminUserRepository _adminUserRepository;
 
-        public GetBikeByPlateCommandHandler(ILogger<GetBikeByPlateCommandHandler> logger,
+        public GetBikeByPlateQueryHandler(ILogger<GetBikeByPlateQueryHandler> logger,
             IBikeRepository bikeRepository, IAdminUserRepository adminUserRepository)
         {
             _logger = logger;
