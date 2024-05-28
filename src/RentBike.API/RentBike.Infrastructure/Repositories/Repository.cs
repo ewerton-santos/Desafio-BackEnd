@@ -28,7 +28,13 @@ namespace RentBike.Infrastructure.Repositories
             IQueryable<TEntity> query = _entities;
             foreach (var includeProperty in includeProperties)
                 query = query.Include(includeProperty);
-            return await query.FirstOrDefaultAsync(entity => (Guid)entity.GetType().GetProperty("Id").GetValue(entity) == Guid.Parse(id.ToString()));
+            var idProperty = typeof(TEntity).GetProperty("Id");
+            var idParameter = Expression.Parameter(typeof(TEntity), "e");
+            var idExpression = Expression.Property(idParameter, idProperty);
+            var idValue = Guid.Parse(id.ToString());
+            var idEqualsExpression = Expression.Equal(idExpression, Expression.Constant(idValue));
+            var lambda = Expression.Lambda<Func<TEntity, bool>>(idEqualsExpression, idParameter);
+            return await query.FirstOrDefaultAsync(lambda);
         }
 
         public async Task<IEnumerable<TEntity>> GetAll() => await _entities.ToListAsync();

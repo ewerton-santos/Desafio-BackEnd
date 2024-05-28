@@ -29,7 +29,7 @@ namespace RentBike.Application.Handlers.Commands
                 DriversLicense = new DriversLicense
                 {
                     Number = request.DriversLicenseNumber,
-                    DriversLicenseType = DriversLicenseType.A
+                    DriversLicenseType = request.DriversLicenseType
                 }
             };
             await _deliverymanUserRepository.Add(deliveryman);
