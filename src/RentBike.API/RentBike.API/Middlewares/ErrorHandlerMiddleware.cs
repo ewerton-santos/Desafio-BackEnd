@@ -19,7 +19,7 @@ namespace RentBike.API.Middlewares
             }
             catch (Exception ex)
             {
-                if(ex.InnerException != null && ex.InnerException.Message.Contains("duplicate")) //eu sei que poderia ter implementado custiom exceptions but "sem tempo irmão"
+                if(ex.InnerException != null && ex.InnerException.Message.Contains("duplicate")) //eu sei que poderia ter implementado custom xceptions but "sem tempo irmão"
                     await HandleExceptionAsync(context, new Exception("Duplicate key"));
                 else
                     await HandleExceptionAsync(context, ex);
