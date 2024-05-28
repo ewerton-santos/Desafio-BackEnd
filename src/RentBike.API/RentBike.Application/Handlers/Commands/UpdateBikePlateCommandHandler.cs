@@ -6,13 +6,13 @@ using RentBike.Domain.Repositories;
 
 namespace RentBike.Application.Handlers.Commands
 {
-    public class UpdaetBikePlateCommandHandler : IRequestHandler<UpdateBikePlateCommand>
+    public class UpdateBikePlateCommandHandler : IRequestHandler<UpdateBikePlateCommand>
     {
-        readonly ILogger<UpdaetBikePlateCommandHandler> _logger;
+        readonly ILogger<UpdateBikePlateCommandHandler> _logger;
         readonly IBikeRepository _bikeRepository;
         readonly IAdminUserRepository _adminUserRepository;
 
-        public UpdaetBikePlateCommandHandler(ILogger<UpdaetBikePlateCommandHandler> logger
+        public UpdateBikePlateCommandHandler(ILogger<UpdateBikePlateCommandHandler> logger
             , IBikeRepository bikeRepository, IAdminUserRepository adminUserRepository)
         {
             _logger = logger;

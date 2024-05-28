@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RentBike.Domain.Exceptions
+﻿namespace RentBike.Domain.Exceptions
 {
-    internal class DriversLicenseNotFoundException
+    public class DriversLicenseNotFoundException : Exception
     {
+        private static readonly string _message = "Driver's license not found";
+        public DriversLicenseNotFoundException() : base(_message) { }
+        public DriversLicenseNotFoundException(string message) : base(message) { }
+        public DriversLicenseNotFoundException(string message, Exception exception) : base(message, exception) { }
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using RentBike.Application.Queries;
 using RentBike.Domain.Entities;
+using RentBike.Domain.Exceptions;
 using RentBike.Domain.Repositories;
 
 namespace RentBike.Application.Handlers.Queries
@@ -23,9 +24,9 @@ namespace RentBike.Application.Handlers.Queries
 
         public async Task<double> Handle(GetRentCostQuery request, CancellationToken cancellationToken)
         {
-            var rent = await _rentRepository.GetById(request.RentId) ?? throw new Exception("Rent not found");
-            if (!rent.IsActive) throw new Exception("This rent has already been completed.");
-            var rentplan = await _rentPlanRepository.GetById(rent.RentPlanId) ?? throw new Exception("Rent Plan not found");
+            var rent = await _rentRepository.GetById(request.RentId) ?? throw new RentNotFoundExeception();
+            if (!rent.IsActive) throw new RentAlreadyCompletedException();
+            var rentplan = await _rentPlanRepository.GetById(rent.RentPlanId) ?? throw new RentPlanNotFoundExeception();
             var dailyUsed = request.ExpectedEndDate.Subtract(rent.StartDate).Days;
             if (dailyUsed > rentplan.Days)
                 return CalculateCostExceededPlanDays(rentplan, dailyUsed);

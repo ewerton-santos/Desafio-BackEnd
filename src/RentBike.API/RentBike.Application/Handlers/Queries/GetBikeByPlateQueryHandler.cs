@@ -25,7 +25,7 @@ namespace RentBike.Application.Handlers.Queries
         {
             var adminUser = await _adminUserRepository.GetById(Guid.Parse(request.AdminUserId));
             return adminUser == null
-                ? throw new AdminUserNotAdminException()
+                ? throw new AdminUserNotFoundException()
                 : (await _bikeRepository.Find(p => p.Plate == request.Plate)).FirstOrDefault();
         }
     }

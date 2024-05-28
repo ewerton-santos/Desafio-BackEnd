@@ -12,7 +12,7 @@ namespace RentBike.Application.Handlers.Commands
         private readonly ILogger _logger;
         private readonly IBikeRepository _bikeRepository;
         private readonly IAdminUserRepository _adminUserRepository;
-        public CreateBikeCommandHandler(ILogger<CreateBikeCommand> logger, IBikeRepository bikeRepository, IAdminUserRepository adminUserRepository)
+        public CreateBikeCommandHandler(ILogger<CreateBikeCommandHandler> logger, IBikeRepository bikeRepository, IAdminUserRepository adminUserRepository)
         {
             _logger = logger;
             _bikeRepository = bikeRepository;

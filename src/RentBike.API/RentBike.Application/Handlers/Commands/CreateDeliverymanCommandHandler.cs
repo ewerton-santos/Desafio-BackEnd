@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using RentBike.Application.Commands;
 using RentBike.Domain.Repositories;
 using RentBikeUsers.Domain.Entities;
-using RentBikeUsers.Domain.Enums;
 
 namespace RentBike.Application.Handlers.Commands
 {
