@@ -1,4 +1,6 @@
-﻿using System.Text.Json;
+﻿using RentBike.Domain.Exceptions;
+using System.Net;
+using System.Text.Json;
 
 namespace RentBike.API.Middlewares
 {
@@ -17,10 +19,19 @@ namespace RentBike.API.Middlewares
             {
                 await _next(context);
             }
+            catch (AdminUserNotFoundException exception) { await HandleCustomExceptionAsync(context, exception, HttpStatusCode.Unauthorized); }
+            catch (BikeNotAvailableException exception) { await HandleCustomExceptionAsync(context, exception, HttpStatusCode.BadRequest); }
+            catch (BikeNotFoundException exception) { await HandleCustomExceptionAsync(context, exception, HttpStatusCode.BadRequest); }
+            catch (DeliverymanUserNotFoundException exception) { await HandleCustomExceptionAsync(context, exception, HttpStatusCode.NotFound); }
+            catch (DriverNotQualifiedForCategoryException exception) { await HandleCustomExceptionAsync(context, exception, HttpStatusCode.BadRequest); }
+            catch (DriversLicenseNotFoundException exception) { await HandleCustomExceptionAsync(context, exception, HttpStatusCode.NotFound); }
+            catch (RentAlreadyCompletedException exception) { await HandleCustomExceptionAsync(context, exception, HttpStatusCode.BadRequest); }
+            catch (RentPlanNotFoundExeception exception) { await HandleCustomExceptionAsync(context, exception, HttpStatusCode.NotFound); }
+            catch (RentNotFoundExeception exception) { await HandleCustomExceptionAsync(context, exception, HttpStatusCode.NotFound); }
             catch (Exception ex)
             {
-                if(ex.InnerException != null && ex.InnerException.Message.Contains("duplicate")) //eu sei que poderia ter implementado custom xceptions but "sem tempo irmão"
-                    await HandleExceptionAsync(context, new Exception("Duplicate key"));
+                if (ex.InnerException != null && ex.InnerException.Message.Contains("duplicate"))
+                    await HandleCustomExceptionAsync(context, new Exception("Duplicate key"), HttpStatusCode.BadRequest);
                 else
                     await HandleExceptionAsync(context, ex);
             }
@@ -33,6 +44,15 @@ namespace RentBike.API.Middlewares
             var result = JsonSerializer.Serialize(new { error = exception.Message });
             return context.Response.WriteAsync(result);
         }
+
+        private Task HandleCustomExceptionAsync(HttpContext context, Exception exception, HttpStatusCode httpStatusCode)
+        {
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode = (int)httpStatusCode;
+            var result = JsonSerializer.Serialize(new { error = exception.Message });
+            return context.Response.WriteAsync(result);
+        }
+
     }
 
     public static class ExceptionHandlerMiddlewareExtensions
