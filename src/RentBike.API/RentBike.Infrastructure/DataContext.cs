@@ -27,5 +27,7 @@ namespace RentBike.Infrastructure
         public DbSet<Bike> Bikes { get; set; }
         public DbSet<RentPlan> RentPlans { get; set; }
         public DbSet<Rent> Rents { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<NotifyOrder> NotifyOrders { get; set; }
     }
 }

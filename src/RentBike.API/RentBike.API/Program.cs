@@ -27,6 +27,8 @@ builder.Services.AddScoped<IDeliverymanUserRepository, DeliverymanUserRepository
 builder.Services.AddScoped<IBikeRepository, BikeRepository>();
 builder.Services.AddScoped<IRentPlanRepository, RentPlanRepository>();
 builder.Services.AddScoped<IRentRepository, RentRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<INotifyOrderRepository, NotifyOrderRepository>();
 builder.Services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
 builder.Services.AddHealthChecks();
 var app = builder.Build();

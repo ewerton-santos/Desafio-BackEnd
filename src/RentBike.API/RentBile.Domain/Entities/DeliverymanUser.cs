@@ -11,5 +11,7 @@ namespace RentBikeUsers.Domain.Entities
         public DriversLicense DriversLicense { get; set; }
         [JsonIgnore]
         public ICollection<Rent> Rents { get; set; }
+        [JsonIgnore]
+        public ICollection<NotifyOrder> NotifyOrders { get; set; }
     }
 }
