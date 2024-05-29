@@ -24,7 +24,7 @@ namespace RentBike.Application.Services
             _channel = _connection.CreateModel();
         }        
 
-        public void Registar()
+        public void Register()
         {
             _channel.QueueDeclare(queue: _config.RabbitMQQueueName(), durable: true, exclusive: false, autoDelete: false, arguments: null);
             var consumer = new EventingBasicConsumer(_channel);

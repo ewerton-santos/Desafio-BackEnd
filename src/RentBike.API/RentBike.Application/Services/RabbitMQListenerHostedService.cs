@@ -13,7 +13,7 @@ namespace RentBike.Application.Services
         }
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            await Task.Run(() => _listenerService.Registar(), stoppingToken);
+            await Task.Run(() => _listenerService.Register(), stoppingToken);
         }
     }
 }

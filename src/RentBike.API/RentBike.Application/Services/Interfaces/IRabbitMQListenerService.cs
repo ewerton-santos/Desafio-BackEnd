@@ -2,7 +2,7 @@
 {
     public interface IRabbitMQListenerService
     {
-        void Registar();
+        void Register();
         void Unregister();
     }
 }
