@@ -15,14 +15,17 @@ namespace RentBike.API.Controllers
         readonly IMediator _mediator;
         readonly IRabbitPublisherService _rabbitPublisherService;
         readonly IAdminUserRepository _adminUserRepository;
+        readonly IOrderRepository _orderRepository;
 
         public OrdersController(ILogger<OrdersController> logger, IMediator mediator
-            , IRabbitPublisherService rabbitPublisherService, IAdminUserRepository adminUserRepository)
+            , IRabbitPublisherService rabbitPublisherService, IAdminUserRepository adminUserRepository
+            , IOrderRepository orderRepository)
         {
             _logger = logger;
             _mediator = mediator;
             _rabbitPublisherService = rabbitPublisherService;
             _adminUserRepository = adminUserRepository;
+            _orderRepository = orderRepository;
         }
 
         [HttpPost]
@@ -34,5 +37,12 @@ namespace RentBike.API.Controllers
             return Accepted();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAll([FromHeader] string? user) 
+        {
+            if (string.IsNullOrWhiteSpace(user)) return Unauthorized();
+            _ = await _adminUserRepository.GetById(Guid.Parse(user)) ?? throw new AdminUserNotFoundException();
+            return Ok(await _orderRepository.GetAll());
+        }
     }
 }

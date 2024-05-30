@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RentBike.Domain.Entities;
-using RentBike.Infrastructure.Migrations;
 using RentBikeUsers.Domain.Entities;
 using System.Reflection;
 

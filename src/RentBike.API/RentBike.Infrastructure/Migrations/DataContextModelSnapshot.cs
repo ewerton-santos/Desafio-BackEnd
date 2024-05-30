@@ -75,9 +75,6 @@ namespace RentBike.Infrastructure.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("deliveryman_id");
 
-                    b.Property<Guid?>("DeliverymanUserId")
-                        .HasColumnType("uuid");
-
                     b.Property<DateTime?>("LastUpdated")
                         .HasColumnType("timestamp with time zone");
 
@@ -86,10 +83,6 @@ namespace RentBike.Infrastructure.Migrations
                         .HasColumnName("order_id");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DeliverymanUserId");
-
-                    b.HasIndex("OrderId");
 
                     b.ToTable("notify_orders", (string)null);
                 });
@@ -205,25 +198,25 @@ namespace RentBike.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("de232093-fce8-4c2f-b5d3-d82d1ce5a3e9"),
+                            Id = new Guid("95b64a50-c449-4032-b90b-2281e549195f"),
                             CostPerDay = 30,
-                            Created = new DateTime(2024, 5, 29, 23, 37, 56, 102, DateTimeKind.Utc).AddTicks(3810),
+                            Created = new DateTime(2024, 5, 30, 2, 56, 1, 833, DateTimeKind.Utc).AddTicks(7529),
                             Days = 7,
                             FinePercentage = 20f
                         },
                         new
                         {
-                            Id = new Guid("f4e37029-4a31-48a5-a181-8e7a564ee19a"),
+                            Id = new Guid("1ef1ad4c-697c-4da7-8ddf-d8b971502d19"),
                             CostPerDay = 28,
-                            Created = new DateTime(2024, 5, 29, 23, 37, 56, 102, DateTimeKind.Utc).AddTicks(3826),
+                            Created = new DateTime(2024, 5, 30, 2, 56, 1, 833, DateTimeKind.Utc).AddTicks(7545),
                             Days = 15,
                             FinePercentage = 40f
                         },
                         new
                         {
-                            Id = new Guid("ddd9b382-e150-4f43-b821-6f96eaeb799a"),
+                            Id = new Guid("7ef69a50-73e8-4d2d-981a-95bf4844ba47"),
                             CostPerDay = 22,
-                            Created = new DateTime(2024, 5, 29, 23, 37, 56, 102, DateTimeKind.Utc).AddTicks(3831),
+                            Created = new DateTime(2024, 5, 30, 2, 56, 1, 833, DateTimeKind.Utc).AddTicks(7549),
                             Days = 30,
                             FinePercentage = 60f
                         });
@@ -323,19 +316,6 @@ namespace RentBike.Infrastructure.Migrations
                     b.ToTable("drivers_licenses", (string)null);
                 });
 
-            modelBuilder.Entity("RentBike.Domain.Entities.NotifyOrder", b =>
-                {
-                    b.HasOne("RentBikeUsers.Domain.Entities.DeliverymanUser", null)
-                        .WithMany("NotifyOrders")
-                        .HasForeignKey("DeliverymanUserId");
-
-                    b.HasOne("RentBike.Domain.Entities.Order", null)
-                        .WithMany("NotifyOrders")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("RentBike.Domain.Entities.Rent", b =>
                 {
                     b.HasOne("RentBike.Domain.Entities.Bike", "Bike")
@@ -379,11 +359,6 @@ namespace RentBike.Infrastructure.Migrations
                     b.Navigation("Rents");
                 });
 
-            modelBuilder.Entity("RentBike.Domain.Entities.Order", b =>
-                {
-                    b.Navigation("NotifyOrders");
-                });
-
             modelBuilder.Entity("RentBike.Domain.Entities.RentPlan", b =>
                 {
                     b.Navigation("Rents");
@@ -392,8 +367,6 @@ namespace RentBike.Infrastructure.Migrations
             modelBuilder.Entity("RentBikeUsers.Domain.Entities.DeliverymanUser", b =>
                 {
                     b.Navigation("DriversLicense");
-
-                    b.Navigation("NotifyOrders");
 
                     b.Navigation("Rents");
                 });

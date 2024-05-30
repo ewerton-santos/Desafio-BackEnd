@@ -1,0 +1,26 @@
+A aplicação consegue rodar apenas usando o seguinte comando
+na raiz no projeto:
+
+docker-compose up --build -d
+
+Entretando, é necessário fazer apenas um passo antes de
+rodar o docker-compose.
+
+é necessário fazer algumas alteração no appsettings.json em
+(src\RentBike.API\RentBike.API)
+
+1 - Alterar a "DefaultConnection" => No Host, substituir o IP "192.168.3.15" pelo seu IPv4 local
+
+2- Alterar "RabbitMQHost" => substituir o IP "192.168.3.15" pelo seu IPv4 local.
+
+Feito isso, pode rodar o comando "docker-compose up --build -d"
+na raiz do projeto, onde encontra-se o arquivo "docker-compose.yml"
+
+Após os containers subirem, a aplicação ficará disponível na
+seguinte URL: http://localhost:8080/swagger/index.html
+
+A parte de upload de arquivos não foi implementada,
+até é levantado junto com o docker-compose o minIO, mas fiquei
+sem tempo para fazer a implementação, visto que o escopo do
+desafio é bem grande.
+

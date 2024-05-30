@@ -33,14 +33,14 @@ namespace RentBike.Application.Handlers.Commands
             var orders = await _orderRepository.Find(x => x.OrderStatus == OrderStatus.Accepted);
             var deliverymans = await _deliverymanUserRepository.Find(p => activeRents.Select(q => q.DeliverymanUserId).Contains(p.Id));
             deliverymans = deliverymans.Where(p => !orders.Select(q => q.DeliverymanId).Contains(p.Id)).ToList();
-            Parallel.ForEach(deliverymans, q =>
+            foreach (var deliveryman in deliverymans) 
             {
-                _notifyOrderRepository.Add(new NotifyOrder
+                await _notifyOrderRepository.Add(new NotifyOrder
                 {
                     OrderId = order.Id,
-                    DeliverymanId = q.Id,
+                    DeliverymanId = deliveryman.Id,
                 });
-            });
+            }
         }
     }
 }

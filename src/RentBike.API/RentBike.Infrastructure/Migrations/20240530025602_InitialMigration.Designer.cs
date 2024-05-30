@@ -12,8 +12,8 @@ using RentBike.Infrastructure;
 namespace RentBike.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240528020608_AddingSomeColumns")]
-    partial class AddingSomeColumns
+    [Migration("20240530025602_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -63,6 +63,60 @@ namespace RentBike.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("bikes", (string)null);
+                });
+
+            modelBuilder.Entity("RentBike.Domain.Entities.NotifyOrder", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("DeliverymanId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("deliveryman_id");
+
+                    b.Property<DateTime?>("LastUpdated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("order_id");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("notify_orders", (string)null);
+                });
+
+            modelBuilder.Entity("RentBike.Domain.Entities.Order", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<float>("DeliveryFee")
+                        .HasColumnType("real")
+                        .HasColumnName("delivery_fee");
+
+                    b.Property<Guid?>("DeliverymanId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("deliveryman_id");
+
+                    b.Property<DateTime?>("LastUpdated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("OrderStatus")
+                        .HasColumnType("int")
+                        .HasColumnName("order_status");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("orders", (string)null);
                 });
 
             modelBuilder.Entity("RentBike.Domain.Entities.Rent", b =>
@@ -122,6 +176,10 @@ namespace RentBike.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<int>("CostPerDay")
+                        .HasColumnType("integer")
+                        .HasColumnName("cost_per_day");
+
                     b.Property<DateTime>("Created")
                         .HasColumnType("timestamp with time zone");
 
@@ -139,6 +197,32 @@ namespace RentBike.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("rent_plans", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("95b64a50-c449-4032-b90b-2281e549195f"),
+                            CostPerDay = 30,
+                            Created = new DateTime(2024, 5, 30, 2, 56, 1, 833, DateTimeKind.Utc).AddTicks(7529),
+                            Days = 7,
+                            FinePercentage = 20f
+                        },
+                        new
+                        {
+                            Id = new Guid("1ef1ad4c-697c-4da7-8ddf-d8b971502d19"),
+                            CostPerDay = 28,
+                            Created = new DateTime(2024, 5, 30, 2, 56, 1, 833, DateTimeKind.Utc).AddTicks(7545),
+                            Days = 15,
+                            FinePercentage = 40f
+                        },
+                        new
+                        {
+                            Id = new Guid("7ef69a50-73e8-4d2d-981a-95bf4844ba47"),
+                            CostPerDay = 22,
+                            Created = new DateTime(2024, 5, 30, 2, 56, 1, 833, DateTimeKind.Utc).AddTicks(7549),
+                            Days = 30,
+                            FinePercentage = 60f
+                        });
                 });
 
             modelBuilder.Entity("RentBikeUsers.Domain.Entities.AdminUser", b =>
