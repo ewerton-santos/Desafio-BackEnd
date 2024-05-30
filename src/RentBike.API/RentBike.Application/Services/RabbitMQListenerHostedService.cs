@@ -10,6 +10,7 @@ namespace RentBike.Application.Services
         public RabbitMQListenerHostedService(IRabbitMQListenerService listenerService)
         {
             _listenerService = listenerService;
+
         }
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {

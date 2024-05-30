@@ -22,12 +22,17 @@ namespace RentBike.API.Middlewares
             catch (AdminUserNotFoundException exception) { await HandleCustomExceptionAsync(context, exception, HttpStatusCode.Unauthorized); }
             catch (BikeNotAvailableException exception) { await HandleCustomExceptionAsync(context, exception, HttpStatusCode.BadRequest); }
             catch (BikeNotFoundException exception) { await HandleCustomExceptionAsync(context, exception, HttpStatusCode.BadRequest); }
-            catch (DeliverymanUserNotFoundException exception) { await HandleCustomExceptionAsync(context, exception, HttpStatusCode.NotFound); }
+            catch (RemoveBikeException exception) { await HandleCustomExceptionAsync(context, exception, HttpStatusCode.BadRequest); }
             catch (DriverNotQualifiedForCategoryException exception) { await HandleCustomExceptionAsync(context, exception, HttpStatusCode.BadRequest); }
             catch (DriversLicenseNotFoundException exception) { await HandleCustomExceptionAsync(context, exception, HttpStatusCode.NotFound); }
             catch (RentAlreadyCompletedException exception) { await HandleCustomExceptionAsync(context, exception, HttpStatusCode.BadRequest); }
             catch (RentPlanNotFoundExeception exception) { await HandleCustomExceptionAsync(context, exception, HttpStatusCode.NotFound); }
             catch (RentNotFoundExeception exception) { await HandleCustomExceptionAsync(context, exception, HttpStatusCode.NotFound); }
+            catch (DeliverymanUserNotFoundException exception) { await HandleCustomExceptionAsync(context, exception, HttpStatusCode.NotFound); }
+            catch (DeliverymanCantAcceptOrderException exception) { await HandleCustomExceptionAsync(context, exception, HttpStatusCode.NotAcceptable); }
+            catch (DeliverymanWasNotNotifiedException exception) { await HandleCustomExceptionAsync(context, exception, HttpStatusCode.BadRequest); }
+            catch (OrderNotAvailableException exception) { await HandleCustomExceptionAsync(context, exception, HttpStatusCode.BadRequest); }
+            catch (OrderNotFoundException exception) { await HandleCustomExceptionAsync(context, exception, HttpStatusCode.NotFound); }
             catch (Exception ex)
             {
                 if (ex.InnerException != null && ex.InnerException.Message.Contains("duplicate"))

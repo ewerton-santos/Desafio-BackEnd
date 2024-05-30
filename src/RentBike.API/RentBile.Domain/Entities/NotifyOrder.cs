@@ -6,7 +6,7 @@ namespace RentBike.Domain.Entities
     {
         public Guid OrderId {  get; set; }
         public Guid DeliverymanId { get; set; }
-        public Order Order { get; set; } = null;
-        public DeliverymanUser DeliverymanUser { get; set; } = null;
+        //public Order Order { get; set; } = null;
+        //public DeliverymanUser DeliverymanUser { get; set; } = null;
     }
 }

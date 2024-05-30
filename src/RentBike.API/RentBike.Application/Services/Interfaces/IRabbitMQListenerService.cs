@@ -1,4 +1,6 @@
-﻿namespace RentBike.Application.Services.Interfaces
+﻿using MediatR;
+
+namespace RentBike.Application.Services.Interfaces
 {
     public interface IRabbitMQListenerService
     {

@@ -14,14 +14,14 @@ IConfigurationRoot config = new ConfigurationBuilder()
           .Build();
 // Add services to the container.
 builder.Services.AddControllers();
+builder.Services.AddMediatR(c => c.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.Load("RentBike.Application")));
+builder.Services.AddHostedService<RabbitMQListenerHostedService>();
 builder.Services.AddSingleton<IConfig, Config>();
 builder.Services.AddSingleton<IRabbitMQListenerService, RabbitMQListenerService>();
-builder.Services.AddHostedService<RabbitMQListenerHostedService>();
 builder.Services.AddScoped<IRabbitPublisherService, RabbitMQPublisherService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataContext>(options => options.UseNpgsql(config.GetConnectionString("DefaultConnection")));
-builder.Services.AddMediatR(c => c.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.Load("RentBike.Application")));
 builder.Services.AddScoped<IAdminUserRepository, AdminUserRepository>();
 builder.Services.AddScoped<IDeliverymanUserRepository, DeliverymanUserRepository>();
 builder.Services.AddScoped<IBikeRepository, BikeRepository>();
