@@ -6,10 +6,10 @@ docker-compose up --build -d
 Entretando, é necessário fazer apenas um passo antes de
 rodar o docker-compose.
 
-é necessário fazer algumas alteração no appsettings.json em
+é necessário fazer algumas alterações no appsettings.json em
 (src\RentBike.API\RentBike.API)
 
-1 - Alterar a "DefaultConnection" => No Host, substituir o IP "192.168.3.15" pelo seu IPv4 local
+1 - Alterar "DefaultConnection" => No Host, substituir o IP "192.168.3.15" pelo seu IPv4 local
 
 2- Alterar "RabbitMQHost" => substituir o IP "192.168.3.15" pelo seu IPv4 local.
 
